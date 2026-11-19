@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* 两层背景的渐变，默认都是初始配色 */
+  --bg-a: linear-gradient(135deg, #0f172a, #1d4ed8 55%, #0ea5e9);
+  --bg-b: linear-gradient(135deg, #0f172a, #1d4ed8 55%, #0ea5e9);
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: system-ui, -apple-system, "PingFang SC", sans-serif;
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+/* 两层全屏伪元素互相叠放，切换时用透明度交叉淡入淡出 */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  transition: opacity 1.5s ease;
+}
+
+body::before {
+  background: var(--bg-a);
+  opacity: 1;
+}
+
+body::after {
+  background: var(--bg-b);
+  opacity: 0;
+}
+
+/* 加了 fade-b 类：前层淡出、后层淡入 */
+body.fade-b::before {
+  opacity: 0;
+}
+
+body.fade-b::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    transition: none;
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  background: rgba(14, 165, 233, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.5);
+}
+
+h1 {
+  margin: 16px 0 8px;
+  font-size: 28px;
+}
+
+.sub {
+  color: rgba(248, 250, 252, 0.75);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.info {
+  list-style: none;
+  margin: 24px 0;
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.info li {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button.btn {
+  border: none;
+  cursor: pointer;
+}
+
+/* 当前颜色实时显示：色块 + HEX 代码 */
+.hex-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hex-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #f8fafc;
+  outline-offset: 2px;
+}
